@@ -44,14 +44,14 @@ LinkedList.prototype.insert = function(data, position) {
     this.head = node;
   }
   else {
-    if(position === this.length) {
+    if(position === this.length - 1) {
       this.tail.next = node;
       this.tail = node;
     }
     else {
       var current = this.head;
       var counter = 0;
-      while(counter < position && current.next) {
+      while(counter < (position - 1) && current.next) {
         current = current.next;
         counter++;
       }
@@ -88,6 +88,50 @@ LinkedList.prototype.delete = function(position) {
   return this.toArray();
 };
 
+LinkedList.prototype.get = function(position) {
+  if(isNaN(position)) return this.toArray();
+  else {
+    if(!this.head) return null;
+    else {
+      if(position === 0) return this.head.data;
+      else if(position === this.length - 1) return this.tail.data;
+      else if(position > this.length - 1 || position < 0) return null;
+      else {
+        var current = this.head;
+        var counter = 0;
+        while(counter < position) {
+          counter++;
+          current = current.next;
+        }
+        return current.data;
+      }
+    }
+  }
+};
+
+LinkedList.prototype.pop = function() {
+  if(!this.tail) return null;
+  else {
+    var current = this.head;
+    if(this.tail === this.head) {
+      this.head.next = null;
+      this.tail =null;
+      return this.data;
+    } else {
+      if(this.tail) {
+        var lastBeforeTail = current;
+        while(current.next) {
+          lastBeforeTail = current;
+          current = current.next;
+        }
+        lastBeforeTail.next = null;
+        this.tail = lastBeforeTail;
+      }
+    }
+    return current.data;
+  }
+};
+
 LinkedList.prototype.toArray = function() {
   var resultArray = [];
   var current = this.head;
@@ -115,5 +159,4 @@ LinkedList.prototype.getLength = function() {
   return this.length;
 };
 
-//toArray, delete, toString, insert, getLength, get,
 //pop (remove and return the tail), shift (remove and return the head)
