@@ -39,7 +39,7 @@ LinkedList.prototype.insert = function(data, position) {
     this.head = node;
     this.tail = node;
   }
-  else if(position <= 0) {
+  else if(position <= 0 || position === undefined) {
     node.next = this.head;
     this.head = node;
   }
@@ -110,13 +110,15 @@ LinkedList.prototype.get = function(position) {
 };
 
 LinkedList.prototype.pop = function() {
+  this.length--;
   if(!this.tail) return null;
   else {
     var current = this.head;
     if(this.tail === this.head) {
-      this.head.next = null;
-      this.tail =null;
-      return this.data;
+      var data = this.tail.data;
+      this.head = null;
+      this.tail = null;
+      return data;
     } else {
       if(this.tail) {
         var lastBeforeTail = current;
@@ -132,10 +134,24 @@ LinkedList.prototype.pop = function() {
   }
 };
 
+LinkedList.prototype.shift = function() {
+  this.length--;
+  if(!this.head) return null;
+  var head = this.head;
+  if(this.head === this.tail) {
+    this.head = null;
+    this.tail = null;
+  }
+  else {
+    this.head = this.head.next;
+  }
+  return head;
+};
+
 LinkedList.prototype.toArray = function() {
   var resultArray = [];
   var current = this.head;
-  if(!this.head) return [];
+  if(!this.head) return resultArray;
   while(current.next) {
     resultArray.push(current.data);
     current = current.next;
@@ -147,6 +163,7 @@ LinkedList.prototype.toArray = function() {
 LinkedList.prototype.toString = function() {
   var resultString = '';
   var current = this.head;
+  if(!this.head) return resultString;
   while(current.next) {
     resultString += current.data + ', ';
     current = current.next;
@@ -158,5 +175,3 @@ LinkedList.prototype.toString = function() {
 LinkedList.prototype.getLength = function() {
   return this.length;
 };
-
-//pop (remove and return the tail), shift (remove and return the head)
