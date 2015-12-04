@@ -74,25 +74,25 @@ LinkedList.prototype.delete = function(position) {
     return false;
   this.length--;
   var current = this.head;
-  var counter = 0;
-  if(current.next) {
+  if(!current.next) {
+    this.head = null;
+    this.tail = null;
+  } else {
     if(position === 0) {
       this.head = current.next;
     } else {
-      while(counter < position) {
-        counter++;
-        if(counter === position && current.next.next) {
+        var counter = 0;
+        while(counter < (position - 1)) {
+          counter++;
+          current = current.next;
+        }
+        if(current.next.next) {
           current.next = current.next.next;
         } else {
           current.next = null;
         }
       }
     }
-  }
-  else {
-    this.head = null;
-    this.tail = null;
-  }
   return this.toArray();
 };
 
