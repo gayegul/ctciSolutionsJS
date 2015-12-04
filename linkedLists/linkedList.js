@@ -10,6 +10,7 @@ var Node = function(data) {
 };
 
 LinkedList.prototype.append = function(data) {
+  if(data === undefined) return null;
   this.length++;
   var node = new Node(data);
   if(!this.head) {
@@ -19,9 +20,11 @@ LinkedList.prototype.append = function(data) {
     this.tail.next = node;
   }
   this.tail = node;
+  return this.length;
 };
 
 LinkedList.prototype.prepend = function(data) {
+  if(data === undefined) return null;
   this.length++;
   var node = new Node(data);
   if(!this.head) {
@@ -30,9 +33,11 @@ LinkedList.prototype.prepend = function(data) {
     node.next = this.head;
   }
   this.head = node;
+  return this.length;
 };
 
 LinkedList.prototype.insert = function(data, position) {
+  if(data === undefined) return null;
   this.length++;
   var node = new Node(data);
   if(!this.head) {
@@ -65,7 +70,7 @@ LinkedList.prototype.insert = function(data, position) {
 
 LinkedList.prototype.delete = function(position) {
   if(position < 0 || position > this.length - 1 ||
-    this.length === 0 || position === undefined) 
+    this.length === 0 || position === undefined)
     return false;
   this.length--;
   var current = this.head;
@@ -92,23 +97,19 @@ LinkedList.prototype.delete = function(position) {
 };
 
 LinkedList.prototype.get = function(position) {
-  if(isNaN(position)) return this.toArray();
+  if(isNaN(position) || !this.head ||
+    position > this.length - 1 || position < 0)
+    return null;
+  if(position === 0) return this.head.data;
+  else if(position === this.length - 1) return this.tail.data;
   else {
-    if(!this.head) return null;
-    else {
-      if(position === 0) return this.head.data;
-      else if(position === this.length - 1) return this.tail.data;
-      else if(position > this.length - 1 || position < 0) return null;
-      else {
-        var current = this.head;
-        var counter = 0;
-        while(counter < position) {
-          counter++;
-          current = current.next;
-        }
-        return current.data;
-      }
+    var current = this.head;
+    var counter = 0;
+    while(counter < position) {
+      counter++;
+      current = current.next;
     }
+    return current.data;
   }
 };
 
@@ -148,9 +149,9 @@ LinkedList.prototype.shift = function() {
 };
 
 LinkedList.prototype.toArray = function() {
+  if(!this.head) return resultArray;
   var resultArray = [];
   var current = this.head;
-  if(!this.head) return resultArray;
   while(current.next) {
     resultArray.push(current.data);
     current = current.next;
