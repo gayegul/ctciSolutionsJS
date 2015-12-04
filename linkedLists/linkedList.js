@@ -38,32 +38,35 @@ LinkedList.prototype.insert = function(data, position) {
   if(!this.head) {
     this.head = node;
     this.tail = node;
-  }
-  else if(position <= 0 || position === undefined) {
-    node.next = this.head;
-    this.head = node;
-  }
-  else {
-    if(position === this.length - 1) {
-      this.tail.next = node;
-      this.tail = node;
+  } else {
+    if(position <= 0 || position === undefined) {
+      node.next = this.head;
+      this.head = node;
     }
     else {
-      var current = this.head;
-      var counter = 0;
-      while(counter < (position - 1) && current.next) {
-        current = current.next;
-        counter++;
+      if(position === this.length - 1) {
+        this.tail.next = node;
+        this.tail = node;
       }
-      node.next = current.next;
-      current.next = node;
+      else {
+        var current = this.head;
+        var counter = 0;
+        while(counter < (position - 1) && current.next) {
+          current = current.next;
+          counter++;
+        }
+        node.next = current.next;
+        current.next = node;
+      }
     }
   }
   return this.toArray();
 };
 
 LinkedList.prototype.delete = function(position) {
-  if(position < 0 || position > this.length - 1 || this.length === 0) return false;
+  if(position < 0 || position > this.length - 1 ||
+    this.length === 0 || position === undefined) 
+    return false;
   this.length--;
   var current = this.head;
   var counter = 0;
@@ -110,33 +113,29 @@ LinkedList.prototype.get = function(position) {
 };
 
 LinkedList.prototype.pop = function() {
-  this.length--;
   if(!this.tail) return null;
-  else {
-    var current = this.head;
-    if(this.tail === this.head) {
-      var data = this.tail.data;
-      this.head = null;
-      this.tail = null;
-      return data;
-    } else {
-      if(this.tail) {
-        var lastBeforeTail = current;
-        while(current.next) {
-          lastBeforeTail = current;
-          current = current.next;
-        }
-        lastBeforeTail.next = null;
-        this.tail = lastBeforeTail;
-      }
+  this.length--;
+  var current = this.head;
+  if(this.tail === this.head) {
+    var data = this.tail.data;
+    this.head = null;
+    this.tail = null;
+    return data;
+  } else {
+    var lastBeforeTail = current;
+    while(current.next) {
+      lastBeforeTail = current;
+      current = current.next;
     }
-    return current.data;
+    lastBeforeTail.next = null;
+    this.tail = lastBeforeTail;
   }
+  return current.data;
 };
 
 LinkedList.prototype.shift = function() {
-  this.length--;
   if(!this.head) return null;
+  this.length--;
   var head = this.head;
   if(this.head === this.tail) {
     this.head = null;
