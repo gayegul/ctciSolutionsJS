@@ -43,28 +43,6 @@ LinkedList.prototype.insert = function(data, position) {
   return this.toArray();
 };
 
-// LinkedList.prototype.removeDuplicate = function() {
-//   var nodes = {};
-//   if(!this.length) return null;
-//   else if(this.length === 1) return this.head;
-//   var current = this.head;
-//   while(current.next) {
-//     if(!nodes[current.data]) {
-//       nodes[current.data] = true;
-//     } else {
-//       this.length--;
-//       current.prev.next = current.next;
-//       current.next.prev = current.prev;
-//       current.prev = null;
-//       current.next = null;
-//     }
-//     current = current.next;
-//   }
-//   current.next = null;
-//   this.tail = current;
-//   return this.toArray();
-// };
-
 LinkedList.prototype.removeDuplicate = function() {
   if(!this.length) return null;
   else if(this.length === 1) return this.toArray();
@@ -75,7 +53,7 @@ LinkedList.prototype.removeDuplicate = function() {
       nodes[current.data] = true;
     } else {
       this.length--;
-      if(current.next.next) {
+      if(current.next) {
         current.prev.next = current.next;
         current.next.prev = current.prev;
       } else {
