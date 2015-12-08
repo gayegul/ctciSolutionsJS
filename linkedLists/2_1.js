@@ -1,13 +1,12 @@
 //using a hashtable and a prev pointer in a singly-linked list
 //0(n)
 
-//invokes the removeDuplicate method 
+//invokes the removeDuplicate method
 LinkedList.prototype.findResult = function() {
   if(!this.length) return null;
-  else if(this.length === 1) return this.toArray();
-  var current = this.head;
+  else if(this.length === 1) return this;
   this.removeDuplicate();
-  return this.toArray();
+  return this;
 };
 
 //main function to remove duplicates
