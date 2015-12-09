@@ -30,7 +30,7 @@ LinkedList.prototype.removeDuplicate = function() {
   return this;
 };
 
-//removes duplicates without using a hashtable 0(n2)
+//removes duplicates without a hashtable 0(n2)
 LinkedList.prototype.removeDuplicateNoHash = function() {
   var prev = this.head;
   var length = this.length;
