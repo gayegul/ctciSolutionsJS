@@ -1,7 +1,6 @@
-//using a hashtable and a prev pointer in a singly-linked list
-//0(n)
+//singly-linked list
 
-//invokes the removeDuplicate method
+//invokes removeDuplicate (and removeDuplicateNoHash) methods
 LinkedList.prototype.findResult = function() {
   if(!this.length) return null;
   else if(this.length === 1) return this;
@@ -9,7 +8,7 @@ LinkedList.prototype.findResult = function() {
   return this;
 };
 
-//main function to remove duplicates
+//removes duplicates using a hashtable 0(n)
 LinkedList.prototype.removeDuplicate = function() {
   var nodes = {};
   var current = this.head;
@@ -27,6 +26,29 @@ LinkedList.prototype.removeDuplicate = function() {
   if(nodes[current.data]) {
     prev.next = null;
     this.length--;
+  }
+  return this;
+};
+
+//removes duplicates without using a hashtable 0(n2)
+LinkedList.prototype.removeDuplicateNoHash = function() {
+  var prev = this.head;
+  var length = this.length;
+  var current;
+  for(var i = 0; i < length - 1; i++) {
+    current = prev.next;
+    while(current.next) {
+      if(current.data === prev.data) {
+        prev.next = current.next;
+        this.length--;
+      }
+      current = current.next;
+    }
+    if(prev.data === current.data) {
+      prev.next = null;
+      this.length--;
+    }
+    prev = prev.next;
   }
   return this;
 };
