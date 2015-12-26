@@ -1,4 +1,4 @@
-//O() terrible
+//O(n)
 function makeBST(array) {
   if(!array.length) return null;
   var rootIndex = Math.floor(array.length / 2);
@@ -10,12 +10,12 @@ function makeBST(array) {
   return root;
 }
 
-//TODO
-//rather than slicing the array, pass indices of beginning
-//and end points of subarrays with a helper recursive function
-//O() would prob be linear
-
 var Node = function(val) {
   this.val = val;
   this.left = this.right = null;
 };
+
+//TODO
+//rather than slicing the array, pass indices of beginning
+//and end points of subarrays with a helper recursive function
+//O(n)
