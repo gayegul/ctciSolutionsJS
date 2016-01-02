@@ -9,7 +9,7 @@ function isUnique(str) {
   return true;
 }
 
-//Without a hashtable 
+//Without a hashtable O(nlogn) due to sorting
 function isUnique(str) {
   str = str.split('').sort();
   for(var i = 0; i < str.length; i++) {
