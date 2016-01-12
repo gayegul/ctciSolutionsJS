@@ -1,2 +1,2 @@
 # ctciSolutionsJS
-Cracking the coding interview solutions in JavaScript
+Cracking the Coding Interview 6th Edition solutions in JavaScript
