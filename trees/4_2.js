@@ -1,21 +1,15 @@
-//O(n)
-function makeBST(array) {
-  if(!array.length) return null;
-  var rootIndex = Math.floor(array.length / 2);
-  var root = new Node(array[rootIndex]);
-  var leftArray = array.slice(0, rootIndex);
-  var rightArray = array.slice(rootIndex + 1, array.length);
-  root.left = makeBST(leftArray);
-  root.right = makeBST(rightArray);
-  return root;
-}
-
-var Node = function(val) {
-  this.val = val;
+var Node = function(data) {
+  this.data = data;
   this.left = this.right = null;
 };
 
-//TODO
-//rather than slicing the array, pass indices of beginning
-//and end points of subarrays with a helper recursive function
-//O(n)
+function createBST(arr, start, end) {
+  if(end < start) return;
+
+  var mid = Math.floor((start + end) / 2);
+  var root = new Node(arr[mid]);
+  root.left = createBST(arr, start, mid - 1);
+  root.right = createBST(arr, mid + 1, end);
+
+  return root;
+}
