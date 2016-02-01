@@ -1,30 +1,26 @@
 //Iteratively
-function treeToLinkedList(root) {
-  var queue = [];
+function printLinkedList(tree) {
+  if(!tree.root) return null;
+  var queueMain = [tree.root];
   var queueChildren = [];
   var result = [];
-  var condition = true;
-  if(!root) return null;
-  result.push(root);
-  if(!root.left) return result;
-  else {
-    queue.push(root.left);
-    queue.push(root.right);
-    result.push(queue);
-    while(condition) {
-      for(var i = 0; i < queue.length; i++) {
-        if(!queue[i].left) condition = false;
-        else queueChildren.push(queue[i].left);
-        if(!queue[i].right) condition = false;
-        else queueChildren.push(queue[i].right);
-        queue[i].next = queue[i + 1];
-      }
-      result.push(queueChildren);
-      queue = queueChildren;
-      queueChildren = [];
+  var tempResult = [];
+  while(true) {
+    while(queueMain.length) {
+      var popped = queueMain.shift();
+      //create a linked list out of the tree nodes using a next pointer
+      if(tempResult.length) tempResult[tempResult.length - 1].next = popped;
+      tempResult.push(popped);
+      if(popped.left) queueChildren.push(popped.left);
+      if(popped.right) queueChildren.push(popped.right);
     }
+    //push the head of the linked list which holds the entire list
+    result.push(tempResult[0]);
+    tempResult = [];
+    queueMain = queueChildren;
+    if(!queueMain.length) return result;
+    queueChildren = [];
   }
-  return result;
 }
 
 //TODO
