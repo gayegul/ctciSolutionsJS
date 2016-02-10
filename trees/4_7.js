@@ -4,6 +4,7 @@ var Node = function(data) {
 };
 
 function buildOrder(projects, dependencies) {
+  var result = [];
   var nodes = {};
   for(var i = 0; i < projects.length; i++) {
     var node = new Node(projects[i]);
@@ -16,7 +17,6 @@ function buildOrder(projects, dependencies) {
     dependent.dependencies.push(dependency);
   }
 
-  var result = [];
   for(var k = 0; k < projects.length; k++) {
     var node = nodes[projects[k]];
     if(result.indexOf(node.data) !== -1) continue;
