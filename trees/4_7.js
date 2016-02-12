@@ -37,7 +37,3 @@ function dfs(node, result) {
   if(result.indexOf(node.data) === -1) result.push(node.data);
   node.seen = false;
 }
-
-var projects = ['a', 'b', 'c', 'd', 'e', 'f'];
-var dependencies = [['a','f'],['b','f'],['c','d'],['d','a'],['d','b']];
-buildOrder(projects, dependencies);
