@@ -1,42 +1,46 @@
 function zeroMatrix(arr) {
   if(!arr || !arr.length) return;
-  var column = {};
-  var row = {};
+  var column = fillOne([], arr.length);
+  var row = fillOne([], arr[0].length);
 
   for(var i = 0; i < arr.length; i++) {
-    if(arr[i][0] === 0) row[i] = 0;
-    else row[i] = 1;
-  }
-
-  for(var j = 0; j < arr[0].length; j++) {
-    if(arr[0][j] === 0) column[j] = 0;
-    else column[j] = 1;
-  }
-
-  var length = arr[0].length >= arr.length ? arr[0].length : arr.length;
-
-  for(var k = 0; k < length; k++) {
-    if(row[k] === 0 || column[k] === 0) {
-      arr = fillZero(arr, k, 'vertical');
-      arr = fillZero(arr, k, 'horizontal');
+    for(var k = 0; k < arr[0].length; k++) {
+      if(arr[i][k] === 0) row[k] = 0;
+      if(arr[i][k] === 0) column[i] = 0;
     }
   }
+
+  for(var n = 0; n < row.length; n++) {
+    if(row[n] === 0) fillZero(arr, n, 'vertical');
+  }
+
+  for(var m = 0; m < column.length; m++) {
+    if(column[m] === 0) fillZero(arr, m, 'horizontal');
+  }
+
   return arr;
 }
 
 function fillZero(arr, index, direction) {
   if(direction === 'horizontal') {
-    for(var i = 0; i < arr.length; i++) {
-      arr[i][index] = 0;
+    for(var i = 0; i < arr[0].length; i++) {
+      arr[index][i] = 0;
     }
   }
   else if(direction === 'vertical') {
-    for(var j = 0; j < arr[0].length; j++) {
-      arr[index][j] = 0;
+    for(var j = 0; j < arr.length; j++) {
+      arr[j][index] = 0;
     }
   }
   return arr;
 }
 
-var arr = [[1,0,4,5], [0,4,2,0]];
+function fillOne(arr, length) {
+  for(var i = 0; i < length; i++) {
+    arr[i] = 1;
+  }
+  return arr;
+}
+
+var arr = [[1,1,4,5], [0,4,2,0], [1,2,3,0], [2,3,2,3]];
 zeroMatrix(arr);
