@@ -21,9 +21,7 @@ function buildOrder(projects, dependencies) {
     var node = nodes[projects[k]];
     if(result.indexOf(node.data) !== -1) continue;
     else if(!node.dependencies.length) result.push(node.data);
-    else {
-      dfs(node, result);
-    }
+    else dfs(node, result);
   }
   return result;
 }
