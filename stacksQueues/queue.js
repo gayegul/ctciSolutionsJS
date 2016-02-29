@@ -1,32 +1,34 @@
 var Queue = function() {
-  this.length = 0;
   this.first = null;
   this.last = null;
 };
 
-var Node = function(data) {
-  this.data = data;
+var Node = function(val) {
+  this.val = val;
   this.next = null;
 };
 
-Queue.prototype.add = function(item) {
-  var node = new Node(item);
-  if(!this.length) {
-    this.first = node;
-    this.last = node;
-  } else {
-    this.last.next = node;
-    this.last = node;
-  }
-  this.length++;
+Queue.prototype.push = function(val) {
+  if(!val) return null;
+  var node = new Node(val);
+  if(!this.first) this.first = node;
+  else this.last.next = node;
+  this.last = node;
 };
 
-Queue.prototype.remove = function() {
-  if(!this.length) return null;
-  else {
-    this.first = this.first.next;
-    this.length--;
+Queue.prototype.pop = function() {
+  if(!this.first) return null;
+  var removed = this.first;
+  if(this.first.next) {
+    var nextFirst = this.first.next;
+    this.first.next = null;
+    this.first = nextFirst;
   }
+  else {
+    this.first = null;
+    this.last = null;
+  }
+  return removed;
 };
 
 Queue.prototype.peek = function() {
@@ -34,6 +36,5 @@ Queue.prototype.peek = function() {
 };
 
 Queue.prototype.isEmpty = function() {
-  if(!this.length) return true;
-  else return false;
+  return !this.last;
 };
