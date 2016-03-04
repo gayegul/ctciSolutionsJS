@@ -1,20 +1,25 @@
-function threeInOne(array1, array2, array3) {
-  var result = [];
-  var stack1 = new Stack();
-  var stack2 = new Stack();
-  var stack3 = new Stack();
+//Implementation of an array made of stacks
 
-  for(var i = 0; i < array1.length; i++) {
-    stack1.push(array1[i]);
-  }
-  for(var j = 0; j < array2.length; j++) {
-    stack2.push(array2[j]);
-  }
-  for(var k = 0; k < array3.length; k++) {
-    stack3.push(array3[k]);
-  }
-  result.push(stack1);
-  result.push(stack2);
-  result.push(stack3);
-  return result;
+function StackArray(arrLen) {
+  this.stack1 = new Stack();
+  this.stack2 = new Stack();
+  this.stack3 = new Stack();
+  this.array = [this.stack1, this.stack2, this.stack3];
+  this.length = arrLen;
 }
+
+StackArray.prototype.push = function(val) {
+  if(!val) return null;
+  var len = Math.floor(this.length / 3);
+  if(this.stack1.size < len) return this.stack1.push(val);
+  else if(this.stack2.size < len) return this.stack2.push(val);
+  else if(this.stack3.size < this.length - 2 * len) return this.stack3.push(val);
+  else return 'Array is full.';
+};
+
+StackArray.prototype.pop = function() {
+  if(this.stack1.isEmpty()) return null;
+  else if(!this.stack3.isEmpty()) return this.stack3.pop();
+  else if(!this.stack2.isEmpty()) return this.stack2.pop();
+  else return this.stack1.pop();
+};
