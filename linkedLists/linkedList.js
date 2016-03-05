@@ -13,12 +13,8 @@ LinkedList.prototype.append = function(data) {
   if(data === undefined) return null;
   this.length++;
   var node = new Node(data);
-  if(!this.head) {
-    this.head = node;
-  }
-  else {
-    this.tail.next = node;
-  }
+  if(!this.head) this.head = node;
+  else this.tail.next = node;
   this.tail = node;
   return this.length;
 };
@@ -27,11 +23,8 @@ LinkedList.prototype.prepend = function(data) {
   if(data === undefined) return null;
   this.length++;
   var node = new Node(data);
-  if(!this.head) {
-    this.tail = node;
-  } else {
-    node.next = this.head;
-  }
+  if(!this.head) this.tail = node;
+  else node.next = this.head;
   this.head = node;
   return this.length;
 };
@@ -78,21 +71,17 @@ LinkedList.prototype.delete = function(position) {
     this.head = null;
     this.tail = null;
   } else {
-    if(position === 0) {
-      this.head = current.next;
-    } else {
-        var counter = 0;
-        while(counter < (position - 1)) {
-          counter++;
-          current = current.next;
-        }
-        if(current.next.next) {
-          current.next = current.next.next;
-        } else {
-          current.next = null;
-        }
+    if(position === 0) this.head = current.next;
+    else {
+      var counter = 0;
+      while(counter < (position - 1)) {
+        counter++;
+        current = current.next;
       }
+      if(current.next.next) current.next = current.next.next;
+      else current.next = null;
     }
+  }
   return this.toArray();
 };
 
@@ -142,9 +131,7 @@ LinkedList.prototype.shift = function() {
     this.head = null;
     this.tail = null;
   }
-  else {
-    this.head = this.head.next;
-  }
+  else this.head = this.head.next;
   return head;
 };
 
