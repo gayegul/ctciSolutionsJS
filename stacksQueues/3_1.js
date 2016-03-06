@@ -1,25 +1,75 @@
-//Implementation of an array made of stacks
+//Implementation of an array acting as 3 stacks
+var ArrayStack = function() {
+  this.values = [];
+  this.first = [];
+  this.second = [];
+  this.third = [];
+};
 
-function StackArray(arrLen) {
-  this.stack1 = new Stack();
-  this.stack2 = new Stack();
-  this.stack3 = new Stack();
-  this.array = [this.stack1, this.stack2, this.stack3];
-  this.length = arrLen;
+ArrayStack.prototype.pop = function(stackNum) {
+  if(!this.values.length) return null;
+  else if(stackNum > 3 || stackNum < 1) return null;
+  var chosenStack;
+  var popped;
+  if(!stackNum) {
+    chosenStack = mostFullStack(this);
+    popped = chosenStack.pop();
+  }
+  else {
+    if(stackNum === 1 && this.first.length) popped = this.first.pop();
+    else if(stackNum === 1 && !this.first.length) return null;
+    if(stackNum === 2 && this.second.length) popped = this.second.pop();
+    else if(stackNum === 2 && !this.second.length) return null;
+    if(stackNum === 3 && this.third.length) popped = this.third.pop();
+    else if(stackNum === 3 && !this.third.length) return null;
+  }
+  var index = this.values.indexOf(popped);
+  this.values.splice(index, 1);
+  return popped;
+};
+
+function mostFullStack(obj) {
+  var first = obj.first.length;
+  var second = obj.second.length;
+  var third = obj.third.length;
+
+  if(first > second && first > third) return obj.first;
+  else if(second > first && second > third) return obj.second;
+  else if(third > second && third > first) return obj.third;
+  else {
+    if(third) return obj.third;
+    else if(second) return obj.second;
+    else return obj.first;
+  }
 }
 
-StackArray.prototype.push = function(val) {
-  if(!val) return null;
-  var len = Math.floor(this.length / 3);
-  if(this.stack1.size < len) return this.stack1.push(val);
-  else if(this.stack2.size < len) return this.stack2.push(val);
-  else if(this.stack3.size < this.length - 2 * len) return this.stack3.push(val);
-  else return 'Array is full.';
+
+ArrayStack.prototype.push = function(val, stackNum) {
+  if(!val || stackNum > 3 || stackNum < 1) return null;
+  var chosenStack;
+  if(stackNum === undefined || !this.values.length) chosenStack = leastFullStack(this);
+  else chosenStack = convertInputToStackNum(this, stackNum);
+  chosenStack.push(val);
+  this.values.push(val);
 };
 
-StackArray.prototype.pop = function() {
-  if(this.stack1.isEmpty()) return null;
-  else if(!this.stack3.isEmpty()) return this.stack3.pop();
-  else if(!this.stack2.isEmpty()) return this.stack2.pop();
-  else return this.stack1.pop();
-};
+function leastFullStack(obj) {
+  var first = obj.first.length;
+  var second = obj.second.length;
+  var third = obj.third.length;
+
+  if(!obj.values.length) return obj.first;
+  else if(first && !second) return obj.second;
+  else if(second && !third) return obj.third;
+
+  if(first < second && first < third) return obj.first;
+  else if(second < first && second < third) return obj.second;
+  else if(third < second && third < first) return obj.third;
+  else return obj.first;
+}
+
+function convertInputToStackNum(obj, num) {
+  if(num === 1) return obj.first;
+  else if(num === 2) return obj.second;
+  else return obj.third;
+}
