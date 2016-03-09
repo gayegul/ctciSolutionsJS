@@ -1,4 +1,4 @@
-//Solution with a queue implementation using Linked Lists
+//Queue (minimum method) implementation using Linked Lists
 var LinkedList = function() {
   this.head = null;
   this.tail = null;
