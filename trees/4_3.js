@@ -22,6 +22,3 @@ function printLinkedList(tree) {
     queueChildren = [];
   }
 }
-
-//TODO
-//Recursively
