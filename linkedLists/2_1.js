@@ -1,36 +1,28 @@
-//With a hashtable
-LinkedList.prototype.removeDuplicates = function() {
-  if(!this.head || !this.head.next) return this;
+// With a hashtable
+function removeDuplicates(head) {
   var seen = {};
-  var current = this.head.next;
-  var prev = this.head;
-  seen[prev.data] = true;
-  while(current) {
+  var prev = null;
+
+  while(head) {
     if(!seen[current.data]) {
       seen[current.data] = true;
-      prev = prev.next;
+      prev = head;
     }
-    else prev.next = current.next;
-    current = current.next;
+    else prev.next = head.next;
+    head = head.next;
   }
-  return this;
-};
+}
 
-// //Without a hashtable (without sorting O(n2) time O(1) space)
-LinkedList.prototype.removeDuplicates = function() {
-  if(!this.head || !this.head.next) return this;
-  var current = this.head;
-  var runner = current;
+// Without a hashtable (without sorting O(n2) time O(1) space)
+function removeDuplicates(head) {
+  var current = head;
+
   while(current) {
-    while(runner.next) {
-      if(runner.next.data === current.data) {
-        runner.next = runner.next.next;
-      } else {
-        runner = runner.next;
-      }
+    var forward = current;
+    while(forward.next) {
+      if(forward.next.data === current.data) forward.next = forward.next.next;
+      else forward = forward.next;
     }
     current = current.next;
-    runner = current;
   }
-  return this;
-};
+}
