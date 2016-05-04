@@ -1,18 +1,29 @@
-//finds kth element from tail in a
-//singly-linked list without length and tail O(n) time O(1) space
-LinkedList.prototype.findKFromTail = function(k) {
-  if(k < 0 || k > this.length) return null;
-  var current = this.head;
-  var fast = this.head;
+// Finds kth element from tail in a
+// Singly-linked list without length and tail O(n) time, O(1) space
+function findKFromTail(head, k) {
+  if(k < 0) return null;
+
+  var current = head;
+  var fast = head;
   var counter = 0;
+
   while(counter < k) {
-    fast = fast.next;
+    forward = forward.next;
+    if(!forward) return null;
     counter++;
   }
-  if(!fast) return null;
-  while(fast.next) {
+
+  while(forward.next) {
     current = current.next;
-    fast = fast.next;
+    forward = forward.next;
   }
-  return current;
-};
+  
+  return current.data;
+}
+
+// Recursively O(n) time, O(n) space
+function findKFromTail(head, k) {
+  if(!head) return 0;
+  var index = findKFromTail(head.next, k) + 1;
+  if(index === k) return head.data;
+}
