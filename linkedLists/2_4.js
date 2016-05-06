@@ -1,32 +1,19 @@
-function doPartition(val, list) {
-  var left;
-  if(list.head.data < val) {
-    left = list.head;
-  }
-  else {
-    left = list.head;
-    var state = true;
-    while(state) {
-      left = left.next;
-      if(left.data < val) state = false;
+// Finds the  nodes smaller than k and prepends them to the very front
+function doPartition(head, k) {
+  if(!head || !head.next || k === null) return head;
+
+  var current = head;
+  var next = current.next;
+
+  while(next) {
+    if(next.data < k) {
+      current.next = next.next;
+      next.next = head;
+      head = next;
     }
+    else current = current.next;
+    next = current.next;
   }
-  var current = left.next;
-  var prev = left;
-  while(current.next) {
-    current = current.next;
-    prev = prev.next;
-    if(current.data < val && current.next) {
-      prev.next = current.next;
-      current.next = left.next;
-      left.next = current;
-      current = prev.next;
-    }
-  }
-  if(current.data < val) {
-    current.next = left.next;
-    left.next = current;
-    prev.next = null;
-  }
-  return list;
+
+  return head;
 }
