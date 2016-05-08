@@ -1,15 +1,23 @@
-function isPalindrome(list) {
-  var letters = {};
-  var current = list.head;
-  var index = 0;
-  while(current) {
-    letters[index] = current.data;
-    index++;
-    current = current.next;
+function isPalindrome(head) {
+  if(!head) return null;
+
+  var stack = [];
+  var slow = head;
+  var fast = head;
+
+  while(fast && fast.next) {
+    stack.push(slow.data);
+    slow = slow.next;
+    fast = fast.next.next;
   }
-  var length = Object.keys(letters).length;
-  for(var i = 0; i < Math.floor(length / 2); i++) {
-    if(letters[i] !== letters[length - 1 - i]) return false;
+
+  if(fast) slow = slow.next;
+
+  while(stack.length) {
+    var popped = stack.pop();
+    if(popped !== slow.data) return false;
+    slow = slow.next;
   }
+
   return true;
 }
