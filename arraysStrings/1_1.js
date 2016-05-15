@@ -1,19 +1,10 @@
-//With a hashtable O(n)
+// With a hashtable O(n) time complexity, O(1) space complexity
 function isUnique(str) {
-  if(!str) return null;
+  if(!str || !str.length) return null;
   var seen = {};
   for(var i = 0; i < str.length; i++) {
-    if(!seen[str[i]]) seen[str[i]] = true;
-    else return false;
-  }
-  return true;
-}
-
-//Without a hashtable O(nlogn) due to sorting
-function isUnique(str) {
-  str = str.split('').sort();
-  for(var i = 0; i < str.length; i++) {
-    if(str[i] === str[i+1]) return false;
+    if(seen[str[i]]) return false;
+    seen[str[i]] = true;
   }
   return true;
 }
