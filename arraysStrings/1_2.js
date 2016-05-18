@@ -1,16 +1,15 @@
 //O(n)
 function isPermutation(str1, str2) {
-    if(str1.length !== str2.length || (!str1 && !str2)) return false;
+    if(str2 === undefined || str1.length !== str2.length) return false;
     var letters = {};
     var length = str1.length;
     for(var i = 0; i < length; i++) {
-      if(!letters[str1[i]]) letters[str1[i]] = 1;
-      else letters[str1[i]]++;
-      if(!letters[str2[i]]) letters[str2[i]] = -1;
-      else letters[str2[i]]--;
-      if(letters[str1[i]] === 0) delete letters[str1[i]];
-      if(letters[str2[i]] === 0) delete letters[str2[i]];
+      if(letters[str1[i]]) letters[str1[i]]++;
+      else letters[str1[i]] = 1;
     }
-    if(Object.keys(letters).length) return false;
+    for(var j = 0; j < length; j++) {
+      if(letters[str2[j]] && letters[str2[j]] > 0) letters[str2[j]]--;
+      else return false;
+    }
     return true;
 }
