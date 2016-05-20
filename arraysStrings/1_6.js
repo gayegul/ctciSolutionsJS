@@ -1,15 +1,13 @@
 function compress(str) {
-  var currentLetter = str.charAt(0);
-  var counter = 0;
+  var counter = 1;
+  var currentLetter = str[0];
   var result = '';
-  for(var i = 0; i < str.length; i++) {
-    if(currentLetter === str.charAt(i)) counter++;
-    else if(currentLetter !== str.charAt(i)) {
+  for(var i = 1; i <= str.length; i++) {
+    if(currentLetter !== str[i]) {
       result += currentLetter + counter;
-      currentLetter = str.charAt(i);
+      currentLetter = str[i];
       counter = 1;
-    }
-    if(!str[i+1]) result += currentLetter + counter;
+    } else counter++;
   }
-  return str.length === result.length ? str : result;
+  return result.length < str.length ? str : result;
 }
